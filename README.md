@@ -5,7 +5,7 @@ Python scripts for importing .dpt files of infrared spectra, merge them, create 
 Python 3 or higher
 
 ## About .dpt files
-the .dpt are data points files from OPUS 6.5 software. They contains two columns: first with the wavenumbers (cm-1) and the second one with absorbance (arbritary units)
+the .dpt are data points files from OPUS 6.5 software. They contains two columns: first with the wavenumbers (cm-1) and the second one with absorbance (arbitrary units)
 
 ## Author
 Mauro Pazmino
