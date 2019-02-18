@@ -58,7 +58,7 @@ trans_df
 
 # Exporting data frame to work in orange
 
-
+export_csv = trans_df.to_csv (r'C:\Users\2166611p\Desktop\PhD\Python Scripts\dataframesp.csv',index = False)
 
 
 
