@@ -6,7 +6,7 @@ import os, fnmatch
 import pandas as pd
 import glob
 
-# this need to be fixed. I should imoprt all data (the 2 columns) and then merge along with the comuin column
+# this need to be fixed. I should imoprt all data (the 2 columns) and then merge along with the common column
 data_file = np.loadtxt('01-AC-100-1D-RX-AB1.dpt',delimiter = '\t')
 w = data_file[:,0]
 a = data_file[:,1]
