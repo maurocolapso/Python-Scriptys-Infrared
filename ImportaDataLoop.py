@@ -8,8 +8,8 @@ import glob
 
 # this need to be fixed. I should imoprt all data (the 2 columns) and then merge along with the common column
 data_file = np.loadtxt('01-AC-100-1D-RX-AB1.dpt',delimiter = '\t')
-w = data_file[:,0]
-a = data_file[:,1]
+w = data_file[:,0] # wavenumbers
+a = data_file[:,1] # Absorbance
 
 ## Import the data
 
@@ -27,6 +27,21 @@ for filename in fileList: # intirate on each file in fileList
 # after the loop it takes all the files in dflist and join them them into a new file. Vertically (axis = 1)
 concatanedDf = pd.concat(dfList,axis=1)
 
+#Extract the wavenumbers for indexing
+wavenumbers = w.tolist()
+
+# Extract the species and age from the name's files
+speciesList=[]  # create a empty list where the species are going to be store
+ageList=[] # create a empty list where the age are going to be store
+
+for filename in fileList:
+    x = filename[3:5]
+    y = filename[6:9]
+    speciesList.append(x)
+    ageList.append(y)
+    
+#------------------------------------------------------------------#
+#Ploting
 Wing_spectra = plt.plot(w, concatanedDf)
 plt.setp(Wing_spectra, 'color', 'r', 'linewidth', 1.0)
 plt.xlabel('Wavenumbers (cm-1)')
