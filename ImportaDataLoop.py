@@ -39,19 +39,31 @@ for filename in fileList:
     y = filename[6:9]
     speciesList.append(x)
     ageList.append(y)
-#------------------------------------------------------------------#
 
+#------------------------------------------------------------------#
 # Make the data frame
 
-# Transpose the concatanedDf
-trans_df = concatanedDf.T
+# round up the values of the wavenumbers and use them as index of the dataframe
+
+w_round = np.ceil(w).astype(int) # round wavenumbers
+index_df = concatanedDf.set_index(w_round) # index the rows with the wavenumebers
+trans_df = index_df.T # Transpose the concatanedDf
 trans_df
 
 # Add columns of species and age
 trans_df['species'] = speciesList # add a new column to a DataFrame
 trans_df['Age'] = ageList
+
 trans_df
-    
+
+# Exporting data frame to work in orange
+
+
+
+
+
+
+
 #------------------------------------------------------------------#
 #Ploting
 Wing_spectra = plt.plot(w, concatanedDf)
