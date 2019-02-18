@@ -39,6 +39,18 @@ for filename in fileList:
     y = filename[6:9]
     speciesList.append(x)
     ageList.append(y)
+#------------------------------------------------------------------#
+
+# Make the data frame
+
+# Transpose the concatanedDf
+trans_df = concatanedDf.T
+trans_df
+
+# Add columns of species and age
+trans_df['species'] = speciesList # add a new column to a DataFrame
+trans_df['Age'] = ageList
+trans_df
     
 #------------------------------------------------------------------#
 #Ploting
