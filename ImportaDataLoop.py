@@ -1,4 +1,3 @@
-
 # import packages
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,7 +5,9 @@ import os, fnmatch
 import pandas as pd
 import glob
 
-# this need to be fixed. I should imoprt all data (the 2 columns) and then merge along with the common column
+# maybe the person input the directory folder
+# program reads the files take one and import it and make the next lines
+
 data_file = np.loadtxt('01-AC-100-1D-RX-AB1.dpt',delimiter = '\t')
 w = data_file[:,0] # wavenumbers
 a = data_file[:,1] # Absorbance
@@ -17,31 +18,39 @@ a = data_file[:,1] # Absorbance
 # files that end with WG then any character ('?') and then .dpt.
 # Therefore I can extract all the wings measurements regardiless the numbers
 
-fileList=glob.glob("*WG?.dpt") # read the files in the current directory
+fileList=glob.glob("*.dpt") # read the files in the current directory
 dfList=[] # create a empty list
+
 for filename in fileList: # intirate on each file in fileList
     print(filename) # print the name of the current file
     # read the file and extrac the second column
     df=pd.read_csv(filename,header=None,delimiter='\t',usecols=[1])
     dfList.append(df) # append the data read into the dfList
+
 # after the loop it takes all the files in dflist and join them them into a new file. Vertically (axis = 1)
 concatanedDf = pd.concat(dfList,axis=1)
-
-#Extract the wavenumbers for indexing
-wavenumbers = w.tolist()
+concatanedDf
 
 # Extract the species and age from the name's files
 speciesList=[]  # create a empty list where the species are going to be store
-ageList=[] # create a empty list where the age are going to be store
-
+ageList=[] # create a empty list where the age is going to be store
+idList=[]   # create a empty list where the ID is going to be store
+mozziepart=[] # create a empty list where the part(head, thorax, etc) is going to be store
+mozziespec=[] # # create a empty list where the specific part is going to be store
 for filename in fileList:
-    x = filename[3:5]
-    y = filename[6:9]
-    speciesList.append(x)
-    ageList.append(y)
+    sp = filename[3:5]
+    ag = filename[6:8]
+    ij = filename[0:2]
+    mp = filename[9:11]
+    ms = filename[12:14]
+    speciesList.append(sp)
+    ageList.append(ag)
+    idList.append(ij)
+    mozziepart.append(mp)
+    mozziespec.append(ms)
 
 #------------------------------------------------------------------#
-# Make the data frame
+# build the data frame
 
 # round up the values of the wavenumbers and use them as index of the dataframe
 
@@ -51,18 +60,18 @@ trans_df = index_df.T # Transpose the concatanedDf
 trans_df
 
 # Add columns of species and age
-trans_df['species'] = speciesList # add a new column to a DataFrame
+trans_df['Species'] = speciesList # add a new column to a DataFrame
 trans_df['Age'] = ageList
+trans_df['ID'] = idList
+trans_df['Part'] = mozziepart
+trans_df['Sp Part'] = mozziespec
 
 trans_df
 
-# Exporting data frame to work in orange
+trans_df.dtypes
 
-export_csv = trans_df.to_csv (r'C:\Users\2166611p\Desktop\PhD\Python Scripts\dataframesp.csv',index = False)
-
-
-
-
+# Export data frame to work in Orange
+export_csv = trans_df.to_csv (r'C:\Users\2166611p\Desktop\PhD\Python Scripts\dataframesp.csv',index = False) #Don't forget to add '.csv' at the end of the path
 
 #------------------------------------------------------------------#
 #Ploting
