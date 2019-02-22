@@ -107,3 +107,6 @@ plt.gca().invert_xaxis()
 plt.xlim((4000, 600))
 plt.title('Wing spectra in Rx Mode')
 plt.show() # important if you want to see your plot
+
+https://www.idtools.com.au/two-scatter-correction-techniques-nir-spectroscopy-python/
+
