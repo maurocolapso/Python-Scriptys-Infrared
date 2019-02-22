@@ -68,12 +68,25 @@ trans_df['Sp Part'] = mozziespec
 
 trans_df
 
-trans_df.dtypes
-
 # Export data frame to work in Orange
 export_csv = trans_df.to_csv (r'C:\Users\2166611p\Desktop\PhD\Python Scripts\dataframesp.csv',index = False) #Don't forget to add '.csv' at the end of the path
 
-#------------------------------------------------------------------#
+
+#--------------------------------------------------------------------------#
+# Plotting each species
+# Plotting each age
+pr = input('Which general part of the mosquito do you want? ')
+age = input('Which age are you looking for? ')
+criteria_part = trans_df['Part'] == pr 
+criteria_age = trans_df['Age'] == age
+criteria_all = criteria_age & criteria_part
+oneday = trans_df[criteria_all]
+oneday
+
+X = oneday.values[0:,0:1763].astype('float32')
+whole_spectra = plt.plot(w, X.T)
+
+
 #Ploting
 Wing_spectra = plt.plot(w, concatanedDf)
 plt.setp(Wing_spectra, 'color', 'r', 'linewidth', 1.0)
