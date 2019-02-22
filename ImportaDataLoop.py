@@ -73,19 +73,30 @@ export_csv = trans_df.to_csv (r'C:\Users\2166611p\Desktop\PhD\Python Scripts\dat
 
 
 #--------------------------------------------------------------------------#
-# Plotting each species
-# Plotting each age
+# Plotting each general part against age (whole spectra)
 pr = input('Which general part of the mosquito do you want? ')
-age = input('Which age are you looking for? ')
-criteria_part = trans_df['Part'] == pr 
-criteria_age = trans_df['Age'] == age
-criteria_all = criteria_age & criteria_part
-oneday = trans_df[criteria_all]
-oneday
+age_one = input('Which age are you looking for? ')
+age_two = input('Which other age are you looking for? ')
+criteria_part = trans_df['Part'] == pr
+criteria_age = trans_df['Age'] == age_one
+criteria_age_two = trans_df['Age'] == age_two
+criteria_all_one = criteria_age & criteria_part
+criteria_all_two = criteria_age_two & criteria_part
+oneday = trans_df[criteria_all_one]
+twoday = trans_df[criteria_all_two]
 
-X = oneday.values[0:,0:1763].astype('float32')
-whole_spectra = plt.plot(w, X.T)
-
+X_one = oneday.values[0:,0:1763].astype('float32')
+X_two = twoday.values[0:,0:1763].astype('float32')
+whole_spectra = plt.plot(w, X.T,'r',w,X_two.T,'b')
+plt.setp(whole_spectra, 'linewidth', 1.0)
+plt.xlabel('Wavenumbers (cm-1)')
+plt.ylabel("Absorbance (a.u)")
+plt.gca().invert_xaxis()
+plt.xlim((4000, 600))
+# legends are not right yet
+plt.legend(('1 day old', '3 days old'),
+           loc='upper right')
+plt.show()
 
 #Ploting
 Wing_spectra = plt.plot(w, concatanedDf)
