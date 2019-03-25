@@ -222,13 +222,15 @@ print(loading_scores[top_10_w])
 
 
 
-# Linear Discriminat Analysis on fingerprint region without preprocessing---------------------------#
+#---------------Linear Discriminat Analysis on fingerprint region without preprocessing---------------------------#
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.model_selection import train_test_split, cross_val_score, cross_val_predict
 from sklearn.utils.multiclass import unique_labels
+from sklearn.metrics import confusion_matrix
+from itertools import product
 
-
+# Defining the number of components of the linear discrminant analysis
 lda = LDA(n_components=2)
 Xlda = lda.fit_transform(X,y)
 
@@ -245,7 +247,7 @@ predicted = cross_val_predict(LDA(), X, y, cv=4)
 
 print("Accuracy: %0.4f (+/- %0.4f)" % (scores.mean(), scores.std() * 2))
 
-
+# Using PCA to improve LDA
 pca = PCA(n_components=20)
 Xpc = pca.fit_transform(X)
 scores = cross_val_score(LDA(), Xpc, y, cv=4)
@@ -253,8 +255,8 @@ predicted = cross_val_predict(LDA(), Xpc, y, cv=4)
 
 print("Accuracy: %0.4f (+/- %0.4f)" % (scores.mean(), scores.std() * 2))
 
-from sklearn.metrics import confusion_matrix
 
+# Confusion matrix
 cm = confusion_matrix(y, predicted)
 
 def plot_confusion_matrix(cm, classes,
@@ -298,13 +300,15 @@ def plot_confusion_matrix(cm, classes,
 
 class_names = np.unique(np.sort(y))
 class_names
-
+cm
 # Plot non-normalized confusion matrix
-plot_confusion_matrix(cm, classes=class_names, normalise = True, text = True, title='Confusion matrix, without normalization')
-predicted
+plot_confusion_matrix(cm, classes=class_names, normalise = True, title='Confusion matrix, without normalization')
 
-# Plot normalized confusion matrix
-plot_confusion_matrix(y_test, y_pred, classes=class_names, normalize=True,
-                      title='Normalized confusion matrix')
 
-unique_labels(y)
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report, confusion_matrix, precision_recall_fscore_support, mean_squared_error, r2_score
+
+cr = classification_report(y, predicted)
+print(cr)
+
+from itertools import *
+itertools.product(range(cm.shape[0]))
