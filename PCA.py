@@ -42,3 +42,21 @@ plt.title('My PCA')
 plt.xlabel('PC1 -{0}%'.format(per_var[0]))
 plt.ylabel('PC2 -{0}%'.format(per_var[1]))
 
+# PCA plot version 2
+
+finalDF = pd.concat([pca_df,raw[['Species']]],axis = 1) #Concatenate 'Species column into PCA dataframe
+
+fig = plt.figure(figsize = (8,8))
+ax = fig.add_subplot(1,1,1) 
+ax.set_xlabel('PC1 -{0}%'.format(per_var[0]), fontsize = 15)
+ax.set_ylabel('PC2 -{0}%'.format(per_var[1]), fontsize = 15)
+ax.set_title('PCA', fontsize = 20)
+targets = ['AC', 'AK']
+colors = ['r','b']
+for target, color in zip(targets,colors):
+    indicesToKeep = finalDF['Species'] == target
+    ax.scatter(finalDF.loc[indicesToKeep, 'PC1']
+               , finalDF.loc[indicesToKeep, 'PC2']
+               , c = color
+               , s = 50)
+ax.legend(targets)
