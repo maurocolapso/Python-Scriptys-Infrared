@@ -38,7 +38,7 @@ y_pred = lda.predict(X_test)
 print(lda.score(X_test,y_test))
 
 
-# Checking the perfomance of the classifer with crossvalidation
+# Training and testing the model using crossvalidation
 scores = cross_val_score(LDA(), dX, y, cv=4)
 predicted = cross_val_predict(LDA(), dX, y, cv=4)
 print("Accuracy: %0.4f (+/- %0.4f)" % (scores.mean(), scores.std() * 2))
