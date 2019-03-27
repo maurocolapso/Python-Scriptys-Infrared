@@ -10,7 +10,7 @@ from sklearn.preprocessing import StandardScaler
 X = raw.loc[:,"1850":"951"] # fingerprint region
 y = raw.loc[:,"Species"] # Seperate the labels
 
-# Savitzky-Golay savgol_filter
+# Savitzky-Golay filter
 dX = savgol_filter(X, 25, polyorder = 5, deriv=1)
 
 # PCA
@@ -30,6 +30,9 @@ plt.title('Scree Plot')
 plt.show()
 
 pca_df = pd.DataFrame(pca_data, index = y ,columns=labels) # put the coordinates into a data frame 
+
+
+# defining colors for the plot
 colormap = {
     1 : '#ff0000',  # Red
     2 : '#0000ff',  # Blue
@@ -42,9 +45,10 @@ plt.title('My PCA')
 plt.xlabel('PC1 -{0}%'.format(per_var[0]))
 plt.ylabel('PC2 -{0}%'.format(per_var[1]))
 
+
 # PCA plot version 2
 
-finalDF = pd.concat([pca_df,raw[['Species']]],axis = 1) #Concatenate 'Species column into PCA dataframe
+finalDF = pd.concat([pca_df,raw[['Species']]],axis = 1) #Concatenate 'Species' column into PCA dataframe
 
 fig = plt.figure(figsize = (8,8))
 ax = fig.add_subplot(1,1,1) 
