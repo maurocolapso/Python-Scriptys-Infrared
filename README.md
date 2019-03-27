@@ -1,7 +1,7 @@
 # Python-Scriptys-Infrared
 Python scripts for: 
 * Importing infrared spectra in format .dpt files merge them and create a dataframe.
-* Principal component analysis 
+* Principal Component Analysis 
 * Linear Discriminant Analysis
 
 ## Prerequisites
