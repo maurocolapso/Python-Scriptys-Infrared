@@ -13,7 +13,9 @@ Python 3 or higher
 ## Disclaimer
 it is still developing.
 
-## Author
+## Authors
 Mauro Pazmino
 PhD student
 Univeristy Glasgow
+
+Salome Perez
