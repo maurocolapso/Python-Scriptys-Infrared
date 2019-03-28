@@ -15,7 +15,5 @@ it is still developing.
 
 ## Authors
 Mauro Pazmino
-PhD student
-Univeristy Glasgow
 
 Salome Perez
