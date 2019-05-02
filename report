@@ -1,0 +1,83 @@
+import numpy as np
+import random as rd
+import pandas as pd
+import matplotlib.pyplot as plt
+import time
+from scipy.signal import savgol_filter
+
+
+measurementsDF = pd.read_csv("C:/Users/2166611p/Desktop/PhD/Scripts/Python Scripts/dfLEGS.csv", skiprows = 0)
+dList=['Species','Age', 'ID', 'Part', 'Sp Part']
+descriptorsDF = measurementsDF[dList]
+
+measurementsDF.drop(dList, axis=1,inplace=True)
+print(measurementsDF.info() , descriptorsDF.info())
+#measurements['idColumn'].describe()
+
+
+wnLabels= measurementsDF.columns.values.tolist() #wavenumbers labels
+waveNums = [int(x) for x in wnLabels] #wavenumbers numbers (for plotting)
+
+#waveNums = list(map(int,waveNums))
+idAllL=list(map(str, descriptorsDF['ID']))
+
+
+data3D = measurementsDF.loc[descriptorsDF['Age'] == '03D']
+data10D = measurementsDF.loc[descriptorsDF['Age'] == '10D']
+#id3D=list(map(str, descriptorsDF['ID']['Age'=='03D']))
+#id10D=list(map(str, descriptorsDF['ID']['Age'=='10D']))
+
+
+X = measurementsDF.loc[:,"1850":"951"] # fingerprint region
+
+
+dX = savgol_filter(measurementsDF, 9, polyorder = 5, deriv=2)
+dX_dataframe = pd.DataFrame(dX)
+
+data3D = dX_dataframe.loc[descriptorsDF['Age'] == '03D']
+data10D = dX_dataframe.loc[descriptorsDF['Age'] == '10D']
+
+### FIGURE 3 AGE MEAN SPECTRA
+plt.figure(figsize=(14,9))
+plt.subplot(211)
+plt.plot(waveNums,data3D.mean(axis=0),'tomato',label = '3 days old')
+plt.plot(waveNums,data10D.mean(axis=0),'teal',label= '10 days old')
+plt.legend(loc=0,fontsize=12,prop={'size': 15})
+plt.ylabel("Absorbance (Second Derivative)",fontsize=14)
+plt.xlim((1000,1800))
+plt.gca().invert_xaxis()
+plt.subplot(212)
+plt.plot(waveNums,dataAC.mean(axis=0),'tomato',label = 'An. colluzzii')
+plt.plot(waveNums,dataAK.mean(axis=0),'teal',label= 'An. gambiae')
+plt.legend(loc=0,fontsize=12,prop={'size': 15})
+plt.xlabel("Wavenumber (1/cm)",fontsize=14)
+plt.ylabel("Absorbance (Second Derivative)",fontsize=14)
+plt.xlim((1000,1800))
+plt.gca().invert_xaxis()
+
+plt.savefig('C:/Users/2166611p/Desktop/PhD/Scripts/Python Scripts/SDLegsSpecies_report.png')
+
+
+### Figure 3 mean spectra species
+dataAC = dX_dataframe.loc[descriptorsDF['Species'] == 'AC']
+dataAK = dX_dataframe.loc[descriptorsDF['Species'] == 'AK']
+plt.figure(figsize=(14,9))
+plt.plot(waveNums,dataAC.mean(axis=0),'tomato',label = 'An. colluzzii')
+plt.plot(waveNums,dataAK.mean(axis=0),'teal',label= 'An. gambiae')
+plt.legend(loc=0,fontsize=12,prop={'size': 15})
+plt.xlabel("Wavenumber (1/cm)",fontsize=14)
+plt.ylabel("Absorbance (Second Derivative)",fontsize=14)
+plt.xlim((1000,1800))
+plt.gca().invert_xaxis()
+plt.annotate('1510', xy=(1510, -0.008), xytext=(1500, -0.010),
+            arrowprops=dict(facecolor='black', shrink=0.05),
+            )
+plt.annotate('1380', xy=(1380, -0.005), xytext=(1370, -0.007),
+            arrowprops=dict(facecolor='black', shrink=0.05),
+            )
+plt.annotate('1510', xy=(1510, -0.008), xytext=(1500, -0.010),
+            arrowprops=dict(facecolor='black', shrink=0.05),
+            )
+plt.annotate('1200', xy=(1200, -0.003), xytext=(1190, -0.005),
+            arrowprops=dict(facecolor='black', shrink=0.05),
+            )
